@@ -33,18 +33,18 @@ class Users{
         if(empty($data['userName']) || empty($data['userEmail']) || empty($data['userUid']) || empty($data['userPwd']) || empty($data['pwdRepeat'])){
             //algo de un error
             flash("register", "Por favor llene todos los campos");
-            redirect("../signup.php");
+            redirect("../views/signup.php");
         }
 
         //si el nombre de usuario tiene caracteres no alfanumericos
         if(!preg_match("/^[a-zA-Z0-9]*$/", $data['userUid'])){
             flash("register", "Nombre de usuario invalido");
-            redirect("../signup.php");
+            redirect("../views/signup.php");
         }
 
         if(!filter_var($data['userEmail'], FILTER_VALIDATE_EMAIL)){
             flash("register", "email invalido");
-            redirect("../signup.php");
+            redirect("../views/signup.php");
         }
 
         //si la contraseña tiene menos de 8 caracteres
@@ -53,13 +53,13 @@ class Users{
             redirect("../signup.php");
         } else if($data['userPwd'] !== $data['pwdRepeat']){ //si las contraseñas no coinciden
             flash("register", "Las contraseñas no coinciden");
-            redirect("../signup.php");
+            redirect("../views/signup.php");
         }
 
         //Si existe un usuario con el mismo email o username
         if($this->userModel->findUserByEmailOrUsername($data['userEmail'], $data['userName'])){
             flash("register", "El Nombre de usuario o correo ya está en uso");
-            redirect("../signup.php");
+            redirect("../views/signup.php");
         }
 
         //si se llega a este punto, se ha pasado todas las validaciones
@@ -69,7 +69,7 @@ class Users{
 
         //Registrar Usuario
         if($this->userModel->register($data)){
-            redirect("../login.php");
+            redirect("../views/login.php");
         }else{
             die("Algo salio mal...");
         }
@@ -88,7 +88,7 @@ class Users{
 
         if(empty($data['name/email']) || empty($data['userPwd'])){
             flash("login", "Por favor, complete todos los campos");
-            header("location: ../login.php");
+            header("location: ../views/login.php");
             exit();
         }   
         
@@ -103,7 +103,7 @@ class Users{
         }else{ 
             //si el usuario no fue encontrado
             flash("login", "Usuario no encontrado");
-            redirect("../login.php");
+            redirect("../views/login.php");
         }
    }
 
@@ -112,7 +112,7 @@ class Users{
     $_SESSION['userId'] = $user->userId;
     $_SESSION['userName'] = $user->userName;
     $_SESSION['userEmail'] = $user->userEmail;
-    redirect("../index.php");
+    redirect("../views/dashboard.php");
    }
 
    //cierra la sesión
@@ -121,7 +121,7 @@ class Users{
     unset($_SESSION['userName']);
     unset($_SESSION['userEmail']);
     session_destroy();
-    redirect("../index.php");
+    redirect("../views/login.php");
    }
 }
     
