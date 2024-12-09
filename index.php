@@ -2,10 +2,10 @@
     include_once 'header.php'
 ?>
 
-    <h1 id="index-text">Welcome, <?php if(isset($_SESSION['userId'])){
+    <h1 id="index-text">Bienvenido, <?php if(isset($_SESSION['userId'])){
         echo explode(" ", $_SESSION['userName'])[0];
     }else{
-        echo 'Guest';
+        echo 'Invitado';
     } 
     ?> </h1>
     

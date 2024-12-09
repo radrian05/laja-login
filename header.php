@@ -16,10 +16,10 @@
         <ul>
             <a href="index.php"><li>Home</li></a>
             <?php if(!isset($_SESSION['userId'])) : ?>
-                <a href="signup.php"><li>Sign Up</li></a>
-                <a href="login.php"><li>Login</li></a>
+                <a href="signup.php"><li>Registro</li></a>
+                <a href="login.php"><li>Iniciar Sesión</li></a>
             <?php else: ?>
-                <a href="./controllers/Users.php?q=logout"><li>Logout</li></a>
+                <a href="./controllers/Users.php?q=logout"><li>Cerrar Sesión</li></a>
             <?php endif; ?>
         </ul>
     </nav>
