@@ -1,7 +1,7 @@
 <?php
     include_once '../helpers/session_helper.php';
 
-    //si no hay una sesió activa al acceder a esta página, se redirige a la página de login
+    //si no hay una sesión activa al acceder a esta página, se redirige a la página de login
     if(!isset($_SESSION['userId'])){
         flash("login", "Por favor, inicie sesión para continuar");
         header("location: login.php");
