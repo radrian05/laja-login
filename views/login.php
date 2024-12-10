@@ -1,6 +1,10 @@
-<?php 
+<?php
     include_once '../views/header.php';
     include_once '../helpers/session_helper.php';
+
+    if(isset($_SESSION['userId'])){
+        header("location: ../views/dashboard.php");
+    }
 ?>
     <?php flash('login') ?>
 
