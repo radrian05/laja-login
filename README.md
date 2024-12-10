@@ -26,9 +26,9 @@ El desarrollo de LAJA-LOGIN ha sido posible gracias a la colaboración de los si
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/tu_usuario/laja-login.git
+   git clone https://github.com/radrian05/laja-login.git
    cd laja-login
 
 2. **Ejecutar el script para crear la base de datos:**
    ```bash
-   php dbsetup.phP
+   php dbsetup.php
