@@ -2,18 +2,27 @@
     include_once '../views/header.php';
     include_once '../helpers/session_helper.php';
 ?>
-    <h1 class="header">Inicio de Sesión</h1>
-
     <?php flash('login') ?>
 
-    <form method="post" action="../controllers/Users.php">
-    <input type="hidden" name="type" value="login">
-        <input type="text" name="name/email"  
-        placeholder="Nombre de Usuario/Email...">
-        <input type="password" name="userPwd" 
-        placeholder="Contraseña...">
-        <button type="submit" name="submit">Iniciar Sesión</button>
-    </form>
+    <div class="login">
+        <div class="logo">
+            <img src="logo.jpeg" alt="Logo">
+        </div>
+        <h1>Inventario</h1>
+        <form method="post" action="../controllers/Users.php">
+        <input type="hidden" name="type" value="login">
+            <label for="name/email">
+                <i class="fas fa-user"></i>
+            </label>
+            <input type="text" name="name/email" placeholder="Nombre de Usuario/Email...">
+
+            <label for="userPwd">
+                <i class="fas fa-lock"></i>
+            </label>
+            <input type="password" name="userPwd" placeholder="Contraseña...">
+            <button type="submit" name="submit">Iniciar Sesión</button>
+        </form>
+    </div>
 
     
     
