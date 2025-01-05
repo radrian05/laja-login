@@ -15,10 +15,10 @@
         <h1>Inventario</h1>
         <form method="post" action="../controllers/Users.php">
         <input type="hidden" name="type" value="login">
-            <label for="name/email">
+            <label for="name">
                 <i class="fas fa-user"></i>
             </label>
-            <input type="text" name="name/email" placeholder="Nombre de Usuario/Email...">
+            <input type="text" name="name" placeholder="Nombre de Usuario...">
 
             <label for="userPwd">
                 <i class="fas fa-lock"></i>

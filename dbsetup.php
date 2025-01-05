@@ -28,7 +28,6 @@ $conn->select_db($dbname);
 $sql = "CREATE TABLE IF NOT EXISTS users (
     userId INT(11) AUTO_INCREMENT PRIMARY KEY,
     userName VARCHAR(100) NOT NULL,
-    userEmail VARCHAR(100) NOT NULL UNIQUE,
     userUid VARCHAR(100) NOT NULL UNIQUE,
     userPwd VARCHAR(255) NOT NULL
 )";

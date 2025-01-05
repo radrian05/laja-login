@@ -15,7 +15,6 @@ class Users{
 
         // Sanitizar POST data (sin usar FILTER_SANITIZE_STRING)
         $_POST['userName'] = htmlspecialchars(trim($_POST['userName']));
-        $_POST['userEmail'] = htmlspecialchars(trim($_POST['userEmail']));
         $_POST['userUid'] = htmlspecialchars(trim($_POST['userUid']));
         $_POST['userPwd'] = htmlspecialchars(trim($_POST['userPwd']));
         $_POST['pwdRepeat'] = htmlspecialchars(trim($_POST['pwdRepeat']));
@@ -23,14 +22,13 @@ class Users{
         //init data
         $data = [
             'userName' => $_POST['userName'],
-            'userEmail' => $_POST['userEmail'],
             'userUid' => $_POST['userUid'],
             'userPwd' => $_POST['userPwd'],
             'pwdRepeat' => $_POST['pwdRepeat']
         ];
 
         //validar data
-        if(empty($data['userName']) || empty($data['userEmail']) || empty($data['userUid']) || empty($data['userPwd']) || empty($data['pwdRepeat'])){
+        if(empty($data['userName']) || empty($data['userUid']) || empty($data['userPwd']) || empty($data['pwdRepeat'])){
             //algo de un error
             flash("register", "Por favor llene todos los campos");
             redirect("../views/signup.php");
@@ -39,11 +37,6 @@ class Users{
         //si el nombre de usuario tiene caracteres no alfanumericos
         if(!preg_match("/^[a-zA-Z0-9]*$/", $data['userUid'])){
             flash("register", "Nombre de usuario invalido");
-            redirect("../views/signup.php");
-        }
-
-        if(!filter_var($data['userEmail'], FILTER_VALIDATE_EMAIL)){
-            flash("register", "email invalido");
             redirect("../views/signup.php");
         }
 
@@ -56,9 +49,9 @@ class Users{
             redirect("../views/signup.php");
         }
 
-        //Si existe un usuario con el mismo email o username
-        if($this->userModel->findUserByEmailOrUsername($data['userEmail'], $data['userName'])){
-            flash("register", "El Nombre de usuario o correo ya está en uso");
+        //Si existe un usuario con el mismo username
+        if($this->userModel->findUserByUsername($data['userName'])){
+            flash("register", "El Nombre de usuario ya está en uso");
             redirect("../views/signup.php");
         }
 
@@ -78,24 +71,24 @@ class Users{
     public function login(){
         //sanitizar POST data (sin FILTER_SANITIZE_STRING)
         $_POST['userPwd'] = htmlspecialchars(trim($_POST['userPwd']));
-        $_POST['name/email'] = htmlspecialchars(trim($_POST['name/email']));
+        $_POST['name'] = htmlspecialchars(trim($_POST['name']));
 
         //init
         $data=[
-            'name/email' => $_POST['name/email'],
+            'name' => $_POST['name'],
             'userPwd' => $_POST['userPwd'],
         ];
 
-        if(empty($data['name/email']) || empty($data['userPwd'])){
+        if(empty($data['name']) || empty($data['userPwd'])){
             flash("login", "Por favor, complete todos los campos");
             header("location: ../views/login.php");
             exit();
         }   
         
         //revisa si el usuario o email existe
-        if($this->userModel->findUserByEmailOrUsername($data['name/email'], $data['name/email'])){
+        if($this->userModel->findUserByUsername($data['name'])){
             //si el usuario o correo fue encontrado
-            $loggedInUser = $this->userModel->login($data['name/email'], $data['userPwd']);
+            $loggedInUser = $this->userModel->login($data['name'], $data['userPwd']);
             if($loggedInUser){
                 //crear sesión
                 $this->createUserSession($loggedInUser);
@@ -111,7 +104,6 @@ class Users{
    public function createUserSession($user){
     $_SESSION['userId'] = $user->userId;
     $_SESSION['userName'] = $user->userName;
-    $_SESSION['userEmail'] = $user->userEmail;
     redirect("../views/dashboard.php");
    }
 
@@ -119,7 +111,6 @@ class Users{
    public function logout(){
     unset($_SESSION['userId']);
     unset($_SESSION['userName']);
-    unset($_SESSION['userEmail']);
     session_destroy();
     redirect("../views/login.php");
    }

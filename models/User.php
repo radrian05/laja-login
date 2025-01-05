@@ -9,11 +9,11 @@ class User {
         $this->db = new DB;
     }
 
-    //Encontrar usuario por su correo o nombre de usuario
-    public function findUserByEmailOrUsername($email, $username){
-        $this->db->query('SELECT * FROM users WHERE userUid = :username OR userEmail = :email');
+    //Encontrar usuario por nombre de usuario
+    public function findUserByUsername($username){
+        $this->db->query('SELECT * FROM users WHERE userUid = :username');
         $this->db->bind(':username', $username);
-        $this->db->bind(':email', $email);
+
 
         //ejecuta el query
         $row = $this->db->single();
@@ -29,11 +29,10 @@ class User {
 
     //Registro del usuario enla base de datos
     public function register($data){
-        $this->db->query('INSERT INTO users (userName, userEmail, userUid, userPwd) VALUES (:name, :email, :Uid, :password)');
+        $this->db->query('INSERT INTO users (userName, userUid, userPwd) VALUES (:name, :Uid, :password)');
         
         //bind
         $this->db->bind(':name', $data['userName']);
-        $this->db->bind(':email', $data['userEmail']);
         $this->db->bind(':Uid', $data['userUid']);
         $this->db->bind(':password', $data['userPwd']);
 
@@ -46,8 +45,8 @@ class User {
     }
     
     //login
-    public function login($nameOrEmail, $password){
-        $row = $this->findUserByEmailOrUsername($nameOrEmail, $nameOrEmail);
+    public function login($name, $password){
+        $row = $this->findUserByUsername($name);
 
         if($row == false) return false; //si no existe, se termina la función
 

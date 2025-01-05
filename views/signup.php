@@ -11,8 +11,6 @@
             <input type="hidden" name="type" value="register">
             <input type="text" name="userName" 
             placeholder="Nombre y Apellido...">
-            <input type="text" name="userEmail" 
-            placeholder="Email...">
             <input type="text" name="userUid" 
             placeholder="Nombre de Usuario...">
             <input type="password" name="userPwd" 
