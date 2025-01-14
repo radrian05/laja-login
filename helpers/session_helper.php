@@ -23,4 +23,12 @@ function redirect($location){
     header("location: ".$location);
     exit();
 }
-?> 
+
+function ensureLoggedIn() {
+    if(!isset($_SESSION['userId'])) {
+        flash("login", "Por favor, inicie sesión para continuar");
+        header("location: ../views/login.php");
+        exit();
+    }
+}
+?>

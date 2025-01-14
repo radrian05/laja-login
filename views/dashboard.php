@@ -1,21 +1,33 @@
 <?php
     include_once '../helpers/session_helper.php';
-
-    //si no hay una sesión activa al acceder a esta página, se redirige a la página de login
-    if(!isset($_SESSION['userId'])){
-        flash("login", "Por favor, inicie sesión para continuar");
-        header("location: login.php");
-    }
-
-    include_once 'header.php'
+    ensureLoggedIn();
 ?>
-    <h1 id="index-text">Bienvenido, <?php if(isset($_SESSION['userId'])){
-        echo explode(" ", $_SESSION['userName'])[0];
-    }else{
-        echo 'Invitado';
-    } 
-    ?> </h1>
-     <section id="product-list">
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PHP Login System</title>
+        <link rel="stylesheet" href="dashstyle.css" type="text/css">
+    </head>
+
+    <body>
+        <nav>
+            <ul>
+                <a href="dashboard.php"><li>Home</li></a>
+                <?php if(!isset($_SESSION['userId'])) : ?>
+                    <a href="signup.php"><li>Registro</li></a>
+                    <a href="login.php"><li>Iniciar Sesión</li></a>
+                <?php else: ?>
+                    <a href="../controllers/Users.php?q=logout"><li>Cerrar Sesión</li></a>
+                <?php endif; ?>
+            </ul>
+        </nav>
+
+        <h1 id="index-text">Bienvenido, <?php echo explode(" ", $_SESSION['userName'])[0]; ?> </h1>
+        <section id="product-list">
             <h2>Lista de Productos</h2>
             <button id="toggle-currency">Ver en Bolívares</button>
             <table>
@@ -48,6 +60,9 @@
                 </tbody>
             </table>
         </section>
-<?php
-    include_once 'footer.php';
-?>
+        
+        <footer>
+            <p>&copy; LAJA-DB <?php echo date("Y"); ?></p>
+        </footer>
+    </body>
+</html>
